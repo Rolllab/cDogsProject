@@ -45,31 +45,19 @@ class UserProfileView(UpdateView):
     def get_object(self, queryset=None):
         return self.request.user
 
-# @login_required
-# def user_profile_view(request):
-#     user_object = request.user
-#     context = {
-#         'title': f'Ваш профиль {user_object.first_name} {user_object.last_name}'
-#     }
-#     return render(request, 'users/user_profile_read_only.html', context=context)
 
-
-@login_required
-def user_update_view(request):
-    user_object = request.user
-    if request.method == 'POST':
-        form = UserUpdateForm(request.POST, request.FILES, instance=user_object)
-        if form.is_valid():
-            user_object = form.save()
-            user_object.save()
-            return HttpResponseRedirect(reverse('users:user_profile'))
-
-    context = {
-        'object': user_object,
-        'title': f'Изменить профиль {user_object.first_name} {user_object.last_name}',
-        'form': UserUpdateForm(instance=user_object)
+class UserUpdateView(UpdateView):
+    model = User
+    form_class = UserUpdateForm
+    template_name = 'users/user_update.html'
+    success_url = reverse_lazy('users:user_profile')
+    extra_context = {
+        'title': 'Изменить профиль'
     }
-    return render(request, 'users/user_update.html', context=context)
+
+    def get_object(self, queryset = None):
+        return self.request.user
+
 
 
 @login_required

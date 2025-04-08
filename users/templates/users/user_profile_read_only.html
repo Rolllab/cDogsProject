@@ -6,7 +6,7 @@
     <div class="col-6">
         <div class="card">
             <div class="card-header d-flex justify-content-center">Мой профиль</div>
-            <img class="card-img-top" src="{{ user.avatar|user_media }}" width="300" height="320" alt="Card image cap">
+            <img class="card-img-top" src="{{ user.avatar|user_media }}" width=100% height=100% alt="Card image cap">
             <div class="card-body">
                 <span class="card-text">Почта: {{ user.email }}</span><br>
                 <span class="card-text">Имя: {{ user.first_name|default:"Не указано" }}</span><br>
