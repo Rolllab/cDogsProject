@@ -64,27 +64,14 @@ class UserPasswordChangeView(PasswordChangeView):
     template_name = 'users/user_change_password.html'
     success_url = reverse_lazy('users:user_profile')
 
-# @login_required
-# def user_change_password_view(request):
-#     user_object = request.user
-#     form = UserPasswordChangeForm(user_object, request.POST)
-#     if request.method == 'POST':
-#         if form.is_valid():
-#             user_object = form.save()
-#             update_session_auth_hash(request, user_object)
-#             messages.success(request, 'Пароль был успешно изменен!')
-#             return HttpResponseRedirect(reverse('users:user_profile'))
-#         else:
-#             messages.error(request, 'Не удалось изменить пароль!')
-#     context = {
-#         'form': form
-#     }
-#     return render(request, 'users/user_change_password.html', context=context)
+
+class UserLogoutView(LogoutView):
+    pass
 
 
-def user_logout_view(request):
-    logout(request)
-    return redirect('dogs:index')
+# def user_logout_view(request):
+#     logout(request)
+#     return redirect('dogs:index')
 
 
 @login_required
