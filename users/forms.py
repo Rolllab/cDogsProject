@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.forms import PasswordChangeForm, UserCreationForm
 
 from users.models import User
 from users.validators import validate_password
@@ -19,20 +19,18 @@ class UserForm(StyleFormMixin, forms.ModelForm):
         exclude = ('is_active', )                                   # Другой вариант записи
 
 
-class UserRegisterForm(StyleFormMixin, forms.ModelForm):
-    password = forms.CharField(label='Пароль', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Подтвердите пароль', widget=forms.PasswordInput)
-
+class UserRegisterForm(StyleFormMixin, UserCreationForm):
     class Meta:
         model = User
         fields = ('email',)
 
     def clean_password2(self):
         cd = self.cleaned_data
-        validate_password(cd['password'])
-        if cd['password'] != cd['password2']:
+        validate_password(cd['password1'])
+        if cd['password1'] != cd['password2']:
             print('Пароли не совпадают!!!')
-            raise forms.ValidationError('Пароли не совпадают !!!')
+            # raise forms.ValidationError('Пароли не совпадают !!!')
+            raise forms.ValidationError("Password don't match")
         return cd['password2']
 
 
