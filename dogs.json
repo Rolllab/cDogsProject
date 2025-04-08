@@ -1,0 +1,54 @@
+[
+  {
+    "model": "dogs.breed",
+    "pk": 1,
+    "fields": {
+      "name": "Немецкая овчарка",
+      "description": "Хороший сторож. Большая и пушистая"
+    }
+  },
+  {
+    "model": "dogs.breed",
+    "pk": 2,
+    "fields": {
+      "name": "Колли",
+      "description": "Данная порода снималась в разных фильмах"
+    }
+  },
+  {
+    "model": "dogs.breed",
+    "pk": 3,
+    "fields": {
+      "name": "Чихуахуа",
+      "description": "маленькое чудо"
+    }
+  },
+  {
+    "model": "dogs.breed",
+    "pk": 4,
+    "fields": {
+      "name": "Джек-рассел-терьер",
+      "description": "Очень активный. Снимался в фильме \"Маска\""
+    }
+  },
+  {
+    "model": "dogs.dog",
+    "pk": 2,
+    "fields": {
+      "name": "Лесси",
+      "breed": 2,
+      "photo": "dogs/dog2.jpeg",
+      "birth_date": "2025-02-04"
+    }
+  },
+  {
+    "model": "dogs.dog",
+    "pk": 3,
+    "fields": {
+      "name": "Рекс",
+      "breed": 1,
+      "photo": "dogs/dog1.jpeg",
+      "birth_date": "2021-08-08"
+    }
+  }
+]
