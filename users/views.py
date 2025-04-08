@@ -14,48 +14,25 @@ from users.models import User
 from users.forms import UserRegisterForm, UserLoginForm, UserUpdateForm, UserPasswordChangeForm
 from users.services import send_register_email, send_new_password
 
+
+
 class UserRegisterView(CreateView):
     model = User
     form_class = UserRegisterForm
     success_url = reverse_lazy('users:user_login')
     template_name = 'users/user_register.html'
-
-
-# def user_register_view(request):
-#     form = UserRegisterForm(request.POST)
-#     if request.method == 'POST':
-#         if form.is_valid():
-#             new_user = form.save()
-#             new_user.set_password(form.cleaned_data['password'])
-#             new_user.save()
-#             send_register_email(new_user.email)
-#             return HttpResponseRedirect(reverse('users:user_login'))
-#
-#     form = UserRegisterForm()
-#     context = {
-#         'title': 'Создать аккаунт',
-#         'form': form
-#     }
-#
-#     return render(request,'users/user_register.html', context=context)
-
-def user_login_view(request):
-    if request.method == 'POST':
-        form = UserLoginForm(request.POST)
-        if form.is_valid():
-            cd = form.cleaned_data
-            user = authenticate(email=cd['email'], password=cd['password'])
-            if user:
-                if user.is_active:
-                    login(request, user)
-                    return HttpResponseRedirect(reverse('dogs:index'))
-            return HttpResponse('Вы не можете войти на наш ресурс (ошибка пароля, нет аккаунта, вы забанены)')
-
-    context = {
-        'title': 'Вход в аккаунт',
-        'form': UserLoginForm()
+    extra_context = {
+        'title': 'Регистрация пользователя'
     }
-    return render(request, 'users/user_login.html', context=context)
+
+
+
+class UserLoginView(LoginView):
+    template_name = 'users/user_login.html'
+    form_class = UserLoginForm
+    extra_context = {
+        'title': 'Вход в аккаунт'
+    }
 
 
 @login_required

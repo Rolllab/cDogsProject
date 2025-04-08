@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import PasswordChangeForm, UserCreationForm
+from django.contrib.auth.forms import PasswordChangeForm, UserCreationForm, AuthenticationForm
 
 from users.models import User
 from users.validators import validate_password
@@ -29,14 +29,12 @@ class UserRegisterForm(StyleFormMixin, UserCreationForm):
         validate_password(cd['password1'])
         if cd['password1'] != cd['password2']:
             print('Пароли не совпадают!!!')
-            # raise forms.ValidationError('Пароли не совпадают !!!')
-            raise forms.ValidationError("Password don't match")
+            raise forms.ValidationError('Пароли не совпадают !!!')
         return cd['password2']
 
 
-class UserLoginForm(StyleFormMixin, forms.Form):
-    email = forms.EmailField()
-    password = forms.CharField(label='Пароль', widget=forms.PasswordInput)
+class UserLoginForm(StyleFormMixin, AuthenticationForm):
+    pass
 
 
 class UserUpdateForm(StyleFormMixin, forms.ModelForm):
