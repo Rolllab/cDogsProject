@@ -11,7 +11,7 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 
 from users.models import User
-from users.forms import UserRegisterForm, UserLoginForm, UserUpdateForm, UserPasswordChangeForm
+from users.forms import UserRegisterForm, UserLoginForm, UserUpdateForm, UserPasswordChangeForm, UserForm
 from users.services import send_register_email, send_new_password
 
 
@@ -35,13 +35,23 @@ class UserLoginView(LoginView):
     }
 
 
-@login_required
-def user_profile_view(request):
-    user_object = request.user
-    context = {
-        'title': f'Ваш профиль {user_object.first_name} {user_object.last_name}'
+class UserProfileView(UpdateView):
+    model = User
+    form_class = UserForm
+    template_name = 'users/user_profile_read_only.html'
+    extra_context = {
+        'title': 'Ваш профиль'
     }
-    return render(request, 'users/user_profile_read_only.html', context=context)
+    def get_object(self, queryset=None):
+        return self.request.user
+
+# @login_required
+# def user_profile_view(request):
+#     user_object = request.user
+#     context = {
+#         'title': f'Ваш профиль {user_object.first_name} {user_object.last_name}'
+#     }
+#     return render(request, 'users/user_profile_read_only.html', context=context)
 
 
 @login_required
