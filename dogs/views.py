@@ -77,29 +77,23 @@ class DogUpdateView(UpdateView):
     def get_success_url(self):
         return reverse('dogs:dog_detail', args=[self.kwargs.get('pk')])
 
+
+class DogDeleteView(DeleteView):
+    model = Dog
+    template_name = 'dogs/delete.html'
+    extra_context = {
+        'title': 'Удалить собаку'
+    }
+    success_url = reverse_lazy('dogs:dogs_list')
+
+
 # @login_required
-# def dog_update_view(request, pk):
+# def dog_delete_view(request, pk):
 #     dog_object = get_object_or_404(Dog, pk=pk)
 #     if request.method == 'POST':
-#         form = DogForm(request.POST, request.FILES, instance=dog_object)
-#         if form.is_valid():
-#             dog_object = form.save(commit=False)
-#             dog_object.save()
-#             return HttpResponseRedirect(reverse('dogs:dog_detail', args={pk: pk})) # удивительно, но надо передавать args именно так
+#         dog_object.delete()
+#         return HttpResponseRedirect(reverse('dogs:dogs_list'))
 #     context = {
-#         'object': dog_object,
-#         'form': DogForm(instance=dog_object)
+#         'object': dog_object
 #     }
-#     return render(request, 'dogs/create_update.html', context)
-
-
-@login_required
-def dog_delete_view(request, pk):
-    dog_object = get_object_or_404(Dog, pk=pk)
-    if request.method == 'POST':
-        dog_object.delete()
-        return HttpResponseRedirect(reverse('dogs:dogs_list'))
-    context = {
-        'object': dog_object
-    }
-    return render(request, 'dogs/delete.html', context)
+#     return render(request, 'dogs/delete.html', context)
