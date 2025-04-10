@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
@@ -41,24 +41,22 @@ class DogListView(ListView):
     }
     template_name = 'dogs/dogs.html'
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        queryset = queryset.filter(is_active=True)
-        return queryset
+    # def get_queryset(self):
+    #     queryset = super().get_queryset()
+    #     queryset = queryset.filter(is_active=True)
+    #     return queryset
 
 
 
+class DogCreateView(CreateView):
+    model = Dog
+    form_class = DogForm
+    template_name = 'dogs/create_update.html'
+    extra_context = {
+        'title': 'Питомник - Все наши собаки'
+    }
+    success_url = reverse_lazy('dogs:dogs_list')
 
-@login_required
-def dog_create_view(request):
-    if request.method == 'POST':
-        form = DogForm(request.POST, request.FILES)
-        if form.is_valid():
-            dog_object = form.save(commit=False)
-            dog_object.owner = request.user
-            dog_object.save()
-            return HttpResponseRedirect(reverse('dogs:dogs_list'))
-    return render(request, 'dogs/create_update.html', {'form': DogForm()})
 
 
 @login_required
