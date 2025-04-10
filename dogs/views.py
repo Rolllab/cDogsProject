@@ -66,30 +66,31 @@ class DogDetailView(DetailView):
     }
 
 
+class DogUpdateView(UpdateView):
+    model = Dog
+    form_class = DogForm
+    template_name = 'dogs/create_update.html'
+    extra_context = {
+        'title': 'Изменить собаку'
+    }
+
+    def get_success_url(self):
+        return reverse('dogs:dog_detail', args=[self.kwargs.get('pk')])
+
 # @login_required
-# def dog_detail_view(request, pk):
-#     dog_object = Dog.objects.get(pk=pk)
+# def dog_update_view(request, pk):
+#     dog_object = get_object_or_404(Dog, pk=pk)
+#     if request.method == 'POST':
+#         form = DogForm(request.POST, request.FILES, instance=dog_object)
+#         if form.is_valid():
+#             dog_object = form.save(commit=False)
+#             dog_object.save()
+#             return HttpResponseRedirect(reverse('dogs:dog_detail', args={pk: pk})) # удивительно, но надо передавать args именно так
 #     context = {
 #         'object': dog_object,
-#         'title': f'Вы выбрали {dog_object.name}. Порода: {dog_object.breed.name}'
+#         'form': DogForm(instance=dog_object)
 #     }
-#     return render(request, 'dogs/detail.html', context)
-
-
-@login_required
-def dog_update_view(request, pk):
-    dog_object = get_object_or_404(Dog, pk=pk)
-    if request.method == 'POST':
-        form = DogForm(request.POST, request.FILES, instance=dog_object)
-        if form.is_valid():
-            dog_object = form.save(commit=False)
-            dog_object.save()
-            return HttpResponseRedirect(reverse('dogs:dog_detail', args={pk: pk})) # удивительно, но надо передавать args именно так
-    context = {
-        'object': dog_object,
-        'form': DogForm(instance=dog_object)
-    }
-    return render(request, 'dogs/create_update.html', context)
+#     return render(request, 'dogs/create_update.html', context)
 
 
 @login_required
