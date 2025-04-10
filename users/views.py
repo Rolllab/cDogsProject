@@ -24,7 +24,10 @@ class UserRegisterView(CreateView):
     extra_context = {
         'title': 'Регистрация пользователя'
     }
-
+    def form_valid(self, form):
+        self.object = form.save()
+        send_register_email(self.object.email)
+        return super().form_valid(form)
 
 
 class UserLoginView(LoginView):
