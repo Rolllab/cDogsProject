@@ -2,7 +2,7 @@
 {% load my_tags %}
 {% block content %}
 <div class="row">
-    {% for object in objects_list %}
+    {% for object in object_list %}
     <div class="col-md-4">
         <div class="card mb-4 box-shadow">
             <img class="card-img-top" src="{{ object.photo|dogs_media }}" width="300" height="320" alt="Card image cap">

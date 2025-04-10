@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
 from dogs.models import Breed, Dog
 from dogs.forms import DogForm
@@ -32,12 +33,20 @@ def breed_dogs_list_view(request, pk):
     }
     return render(request, 'dogs/dogs.html', context)
 
-def dogs_list_view(request):
-    context = {
-        'objects_list': Dog.objects.all(),
+
+class DogListView(ListView):
+    model = Dog
+    extra_context = {
         'title': 'Питомник - Все наши собаки'
     }
-    return render(request, 'dogs/dogs.html', context)
+    template_name = 'dogs/dogs.html'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(is_active=True)
+        return queryset
+
+
 
 
 @login_required
