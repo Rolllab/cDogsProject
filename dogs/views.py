@@ -12,7 +12,7 @@ from dogs.forms import DogForm, DogParentForm
 
 def index(request):
     context = {
-        'objects_list': Breed.objects.all()[:3],
+        'object_list': Breed.objects.all()[:3],
         'title': 'Питомник - Главная'
     }
     return render(request, 'dogs/index.html', context)
@@ -20,7 +20,7 @@ def index(request):
 
 def breeds_list_view(request):
     context = {
-        'objects_list': Breed.objects.all(),
+        'object_list': Breed.objects.all(),
         'title': 'Питомник - Все наши породы'
     }
     return render(request, 'dogs/breeds.html', context)
@@ -29,7 +29,7 @@ def breeds_list_view(request):
 def breed_dogs_list_view(request, pk):
     breed_item = Breed.objects.get(pk=pk)
     context = {
-        'objects_list': Dog.objects.filter(breed_id=pk),
+        'object_list': Dog.objects.filter(breed_id=pk),
         'title': f'Собаки породы - {breed_item.name}',
         'breed_pk': breed_item.pk
     }
