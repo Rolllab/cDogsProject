@@ -38,7 +38,8 @@
       "name": "Лесси",
       "breed": 2,
       "photo": "dogs/dog2.jpeg",
-      "birth_date": "2025-02-04"
+      "birth_date": "2025-02-04",
+      "owner": null
     }
   },
   {
@@ -48,7 +49,29 @@
       "name": "Рекс",
       "breed": 1,
       "photo": "dogs/dog1.jpeg",
-      "birth_date": "2021-08-08"
+      "birth_date": "2021-08-28",
+      "owner": null
+    }
+  },
+  {
+    "model": "dogs.dog",
+    "pk": 5,
+    "fields": {
+      "name": "test2",
+      "breed": 2,
+      "photo": "",
+      "birth_date": "2024-10-10",
+      "owner": 3
+    }
+  },
+  {
+    "model": "dogs.dogparent",
+    "pk": 1,
+    "fields": {
+      "dog": 5,
+      "name": "test",
+      "breed": 2,
+      "birth_date": "2021-10-10"
     }
   }
 ]
