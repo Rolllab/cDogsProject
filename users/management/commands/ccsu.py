@@ -39,9 +39,9 @@ class Command(BaseCommand):
         print("Модератор создан!!!")
 
         user = User.objects.create(
-            email='user_user@web.top',
-            first_name='User',
-            last_name='User_ov',
+            email=os.getenv('USER_EMAIL'),
+            first_name=os.getenv('USER_FIRST_NAME'),
+            last_name=os.getenv('USER_LAST_NAME'),
             role='user',
             is_staff=False,
             is_superuser=False,
