@@ -1,5 +1,4 @@
 from django.shortcuts import render
-
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -8,6 +7,7 @@ from django.forms import inlineformset_factory
 
 from dogs.models import Breed, Dog, DogParent
 from dogs.forms import DogForm, DogParentForm
+from users.models import UserRoles
 
 
 def index(request):
@@ -60,11 +60,26 @@ class DogListView(ListView):
     }
     template_name = 'dogs/dogs.html'
 
-    # def get_queryset(self):
-    #     queryset = super().get_queryset()
-    #     queryset = queryset.filter(is_active=True)
-    #     return queryset
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(is_active=True)
+        return queryset
 
+
+class DogDeactivatedListView(LoginRequiredMixin, ListView):
+    model = Dog
+    template_name = 'dogs/dogs.html'
+    extra_context = {
+        'title': 'Питомник - не активные собаки'
+    }
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if self.request.user.role in [UserRoles.MODERATOR, UserRoles.ADMIN]:
+            queryset = queryset.filter(is_active=False)
+        if self.request.user.role == UserRoles.USER:
+            queryset = queryset.filter(is_active=False, owner=self.request.user)
+        return queryset
 
 
 class DogCreateView(LoginRequiredMixin, CreateView):
