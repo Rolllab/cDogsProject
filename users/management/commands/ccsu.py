@@ -1,4 +1,4 @@
-# ------------------------------------- Command create superuser ----------------------------------------------------
+# ------------------------------------- Command create users ----------------------------------------------------
 import os
 from django.core.management import BaseCommand
 from dotenv import load_dotenv
@@ -10,15 +10,44 @@ load_dotenv()
 
 class Command(BaseCommand):
     def handle(self, *args, **kwargs):
-        admin_user = User.objects.create(
+        admin = User.objects.create(
             email=os.getenv('ADMIN_EMAIL'),
             first_name=os.getenv('ADMIN_FIRST_NAME'),
             last_name=os.getenv('ADMIN_LAST_NAME'),
+            role='admin',
             is_staff=True,
             is_superuser=True,
             is_active=True,
         )
 
-        admin_user.set_password(os.getenv('ADMIN_PASSWORD'))
-        admin_user.save()
-        print("Создан новый пользователь")
+        admin.set_password(os.getenv('ADMIN_PASSWORD'))
+        admin.save()
+        print("Администратор создан!!!")
+
+        moderator = User.objects.create(
+            email=os.getenv('MODERATOR_EMAIL'),
+            first_name=os.getenv('MODERATOR_FIRST_NAME'),
+            last_name=os.getenv('MODERATOR_LAST_NAME'),
+            role='moderator',
+            is_staff=True,
+            is_superuser=False,
+            is_active=True,
+        )
+
+        moderator.set_password(os.getenv('MODERATOR_PASSWORD'))
+        moderator.save()
+        print("Модератор создан!!!")
+
+        user = User.objects.create(
+            email='user_user@web.top',
+            first_name='User',
+            last_name='User_ov',
+            role='user',
+            is_staff=False,
+            is_superuser=False,
+            is_active=True,
+        )
+
+        user.set_password('qwerty')
+        user.save()
+        print("Создан новый пользователь!!!")
