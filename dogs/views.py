@@ -18,22 +18,39 @@ def index(request):
     return render(request, 'dogs/index.html', context)
 
 
-def breeds_list_view(request):
-    context = {
-        'object_list': Breed.objects.all(),
-        'title': 'Питомник - Все наши породы'
+class BreedsListView(LoginRequiredMixin, ListView):
+    model = Breed
+    template_name = 'dogs/breeds.html'
+    extra_context = {
+        'title': 'Все наши породы'
     }
-    return render(request, 'dogs/breeds.html', context)
+# def breeds_list_view(request):
+#     context = {
+#         'object_list': Breed.objects.all(),
+#         'title': 'Питомник - Все наши породы'
+#     }
+#     return render(request, 'dogs/breeds.html', context)
 
 
-def breed_dogs_list_view(request, pk):
-    breed_item = Breed.objects.get(pk=pk)
-    context = {
-        'object_list': Dog.objects.filter(breed_id=pk),
-        'title': f'Собаки породы - {breed_item.name}',
-        'breed_pk': breed_item.pk
+class DogBreedListView(LoginRequiredMixin, ListView):
+    model = Dog
+    template_name = 'dogs/dogs.html'
+    extra_context = {
+        'title': 'Собаки выбранной породы'
     }
-    return render(request, 'dogs/dogs.html', context)
+
+    def get_queryset(self):
+        queryset = super().get_queryset().filter(breed_id=self.kwargs.get('pk'))
+        return queryset
+
+# def breed_dogs_list_view(request, pk):
+#     breed_item = Breed.objects.get(pk=pk)
+#     context = {
+#         'object_list': Dog.objects.filter(breed_id=pk),
+#         'title': f'Собаки породы - {breed_item.name}',
+#         'breed_pk': breed_item.pk
+#     }
+#     return render(request, 'dogs/dogs.html', context)
 
 
 class DogListView(ListView):
@@ -70,9 +87,12 @@ class DogCreateView(LoginRequiredMixin, CreateView):
 class DogDetailView(DetailView):
     model = Dog
     template_name = 'dogs/detail.html'
-    extra_context = {
-        'title': 'Вы выбрали'
-    }
+
+    # Вместо extra_context
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['title'] = f'Подробная информация {self.object}'
+        return context_data
 
 
 class DogUpdateView(LoginRequiredMixin, UpdateView):
