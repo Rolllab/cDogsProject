@@ -6,13 +6,13 @@
     <div class="col-6">
         <div class="card">
             <div class="card-header d-flex justify-content-center">Мой профиль</div>
-            <img class="card-img-top" src="{{ user.avatar|user_media }}" width=100% height=100% alt="Card image cap">
+            <img class="card-img-top p-3" src="{{ user.avatar|user_media }}" width=100% height=100% alt="Card image cap">
             <div class="card-body">
                 <span class="card-text">Почта: {{ user.email }}</span><br>
                 <span class="card-text">Имя: {{ user.first_name|default:"Не указано" }}</span><br>
                 <span class="card-text">Фамилия: {{ user.last_name|default:"Не указано" }}</span><br>
                 <span class="card-text">Телефон: {{ user.phone|default:"Не указано" }}</span><br>
-                <span class="card-text">Телеграм: {{ user.telegram|default:"Не указано" }}</span><br>
+                <span class="card-text">Телеграм: {{ user.telegram|default:"Не указано" }}</span><br><hr>
                 <button class="btn btn-outline-warning">
                     <a class="btn btn-link" href="{% url 'users:user_update' %}">обновить</a>
                 </button>
