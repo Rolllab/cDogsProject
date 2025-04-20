@@ -36,6 +36,7 @@
 {#                        <li><a href="{% url 'users:user_register' %}" class="text-white">Регистрация</a></li>#}
 {#                        <li><a href="{% url 'users:user_login' %}" class="text-white">Вход</a></li>#}
                         {% if user.is_authenticated %}
+                            <li><a href="{% url 'users:users_list' %}" class="text-white">Все пользователи</a></li>
                             <li><a href="{% url 'users:user_profile' %}" class="text-white">Профиль</a></li>
                             <form method="post" action="{% url 'users:user_logout' %}">
                                 {% csrf_token %}
