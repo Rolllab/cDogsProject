@@ -11,7 +11,8 @@
             <span class="text-muted">Email: <span class="float-right">{{ object.owner|default:"Без хозяина" }}</span></span><br>
             <span class="text-muted">Имя: <span class="float-right">{{ object.owner.first_name|default:"Не указано" }}</span></span><br>
             <span class="text-muted">Телефон: <span class="float-right">{{ object.owner.phone|default:"Не указано" }}</span></span><br>
-            <span class="text-muted">Телеграм: <span class="float-right">{{ object.owner.telegram|default:"Не указано" }}</span></span><br>
+            <span class="text-muted">Телеграм: <span class="float-right">{{ object.owner.telegram|default:"Не указано" }}</span></span><br><hr>
+            <span class="text-muted">Просмотры: <span class="float-right">{{ object.views }}</span></span><br>
         </div>
         <div class="card-footer">
             {% if user.is_staff or user == object.owner %}
