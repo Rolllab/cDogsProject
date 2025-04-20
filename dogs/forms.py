@@ -19,6 +19,16 @@ class DogForm(StyleFormMixin, forms.ModelForm):
         return cleaned_data
 
 
+class DogAdminForm(DogForm):
+    class Meta:
+        model = Dog
+        exclude = ('is_active',)
+
+    # def clean_birth_date(self):
+    #     cleaned_birth_date = super().clean_birth_date()
+    #     return cleaned_birth_date
+
+
 class DogParentForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = DogParent
