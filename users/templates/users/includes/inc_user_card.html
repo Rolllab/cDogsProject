@@ -12,6 +12,7 @@
                 <li>Телефон: {{ object.phone|default:'не указан' }}</li>
                 <li>Телеграм: {{ object.telegram|default:'не указан' }}</li>
             </ul>
+            <a href="{% url 'users:users_detail' object.pk %}" class="btn btn-outline-info btn-lg btn-block">Подробная информация</a>
         </div>
     </div>
 </div>
