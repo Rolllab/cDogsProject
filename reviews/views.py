@@ -62,7 +62,7 @@ class ReviewUpdateView(LoginRequiredMixin, UpdateView):
     }
 
     def get_success_url(self):
-        return reverse('reviews:reviews_detail')        #!!!!!!!!!!!!!!!!!!!!!!!!!!! review:review_detail !!!!!!!!!!!
+        return reverse('reviews:review_detail')
 
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset=queryset)
@@ -78,3 +78,15 @@ class ReviewDeleteView(PermissionRequiredMixin, DeleteView):
 
     def get_success_url(self):
         return reverse('reviews:reviews_list')
+
+
+def review_toggle_activity(request, slug):
+    review_item = get_object_or_404(Review, slug=slug)
+    if review_item.sign_of_review:
+        review_item.sign_of_review = False
+        review_item.save()
+        return redirect(reverse('reviews:reviews_deactivated'))
+    else:
+        review_item.sign_of_review = False                  # !!!!!!!!!!!!! одинаковое значение !!!!!!!!!!!!!!!!!!!!
+        review_item.save()
+        return redirect(reverse('reviews:reviews_list'))
