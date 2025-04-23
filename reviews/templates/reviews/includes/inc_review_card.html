@@ -1,0 +1,21 @@
+{% load my_tags %}
+<div class="col-5">
+    <div class="card mb-0 box-shadow">
+        <div class="card-header">
+            <h4 class="my-0 font-weight-center">{{ object.dog.name }} / {{ object.dog.breed }}</h4>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title pricing-card-title">{{ object.title|truncatechars:30 }}</h5>
+            <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                <li>Создан: {{ object.created }}</li>
+            </ul>
+{#            <a href="{% url 'reviews:review_detail' object.slug %}" class="btn btn-lg btn-block btn-outline-info">Подробнее</a>#}
+{#            {% if object.author == user %}#}
+{#                <a href="{% url 'reviews:review_update' object.slug %}" class="btn btn-lg btn-block btn-outline-warning">Изменить отзыв</a>#}
+{#                <a href="{% url 'reviews:review_delete' object.slug %}" class="btn btn-lg btn-block btn-outline-danger">Удалить отзыв</a>#}
+{#            {% elif user.is_staff %}#}
+{#                <a href="{% url 'reviews:review_delete' object.slug %}" class="btn btn-lg btn-block btn-outline-danger">Удалить отзыв</a>#}
+{#            {% endif %}#}
+        </div>
+    </div>
+</div>
