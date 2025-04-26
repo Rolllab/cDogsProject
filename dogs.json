@@ -25,7 +25,7 @@
   },
   {
     "model": "dogs.breed",
-    "pk": 4,
+    "pk": 1,
     "fields": {
       "name": "Джек-рассел-терьер",
       "description": "Очень активный. Снимался в фильме \"Маска\""
@@ -59,14 +59,14 @@
   },
   {
     "model": "dogs.dog",
-    "pk": 5,
+    "pk": 3,
     "fields": {
       "name": "test3",
       "breed": 2,
       "photo": "",
       "birth_date": "2024-10-10",
       "is_active": true,
-      "owner": 5,
+      "owner": 3,
       "views": 0
     }
   },
@@ -74,7 +74,7 @@
     "model": "dogs.dogparent",
     "pk": 1,
     "fields": {
-      "dog": 5,
+      "dog": 2,
       "name": "test",
       "breed": 2,
       "birth_date": "2021-10-10"
