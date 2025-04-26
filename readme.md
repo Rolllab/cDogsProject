@@ -1,3 +1,5 @@
+Как установить этот проект на свой пк:
+
 ```bash
   pip install -r requirements.txt 
 ```
