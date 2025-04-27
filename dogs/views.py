@@ -28,12 +28,21 @@ class BreedsListView(LoginRequiredMixin, ListView):
         'title': 'Все наши породы'
     }
     paginate_by = 3
-# def breeds_list_view(request):
-#     context = {
-#         'object_list': Breed.objects.all(),
-#         'title': 'Питомник - Все наши породы'
-#     }
-#     return render(request, 'dogs/breeds.html', context)
+
+
+class BreedsSearchListView(LoginRequiredMixin, ListView):
+    model = Dog
+    template_name = 'dogs/breeds.html'
+    extra_context = {
+        'title': 'Результаты поискового запроса'
+    }
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        object_list = Breed.objects.filter(
+            Q(name__icontains=query)
+        )
+        return object_list
 
 
 class DogBreedListView(LoginRequiredMixin, ListView):
@@ -46,6 +55,7 @@ class DogBreedListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         queryset = super().get_queryset().filter(breed_id=self.kwargs.get('pk'))
         return queryset
+
 
 
 class DogListView(ListView):
@@ -62,6 +72,21 @@ class DogListView(ListView):
         return queryset
 
 
+class DogSearchListView(LoginRequiredMixin, ListView):
+    model = Dog
+    template_name = 'dogs/dogs.html'
+    extra_context = {
+        'title': 'Результаты поискового запроса'
+    }
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        object_list = Dog.objects.filter(
+            Q(name__icontains=query), is_active=True
+        )
+        return object_list
+
+
 class DogDeactivatedListView(LoginRequiredMixin, ListView):
     model = Dog
     template_name = 'dogs/dogs.html'
@@ -76,15 +101,6 @@ class DogDeactivatedListView(LoginRequiredMixin, ListView):
         if self.request.user.role == UserRoles.USER:
             queryset = queryset.filter(is_active=False, owner=self.request.user)
         return queryset
-
-
-class DogSearchListView(LoginRequiredMixin, ListView):
-    model = Dog
-    template_name = 'dogs/dogs_search_results.html'
-    queryset = Dog.objects.filter(name__icontains='test3')
-
-    def get_queryset(self):
-        return Dog.objects.filter(Q(name__icontains='test3'))
 
 
 class DogCreateView(LoginRequiredMixin, CreateView):
