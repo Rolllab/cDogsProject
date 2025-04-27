@@ -98,9 +98,19 @@
 </header>
 
 <main class="flex-shrink-0">
-    <div class="d-flex justify-content-end">
-        <span class="p-2">{% include 'dogs/includes/inc_search_fields.html' %}</span>
-    </div>
+    {% if 'breeds/' in request.path %}
+        <div class="d-flex justify-content-end" style="height: 50px;">
+            <span class="p-2">{% include 'dogs/includes/inc_search_fields.html' %}</span>
+        </div>
+    {% elif 'dogs/' in request.path %}
+        <div class="d-flex justify-content-end" style="height: 50px;">
+            <span class="p-2">{% include 'dogs/includes/inc_search_dog.html' %}</span>
+        </div>
+    {% elif '' in request.path %}
+        <div class="d-flex justify-content-end" style="height: 50px;">
+            <span class="p-2">&nbsp;</span>
+        </div>
+    {% endif %}
     <section class="my-jumbotron">
         <div class="container">
             <h1 class="jumbotron-heading text-center">{{ title }}</h1>
