@@ -18,6 +18,7 @@ class ReviewListView(ListView):
     extra_context = {
         'title': 'Все отзывы'
     }
+    paginate_by = 2
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -31,6 +32,7 @@ class ReviewDeactivatedListView(ListView):
     extra_context = {
         'title': 'Не активные отзывы'
     }
+    paginate_by = 2
 
     def get_queryset(self):
         queryset = super().get_queryset()
