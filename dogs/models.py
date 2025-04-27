@@ -3,6 +3,7 @@ from django.conf import settings
 
 from users.models import NULLABLE
 
+
 class Breed(models.Model):
     name = models.CharField(max_length=100, verbose_name='Порода')
     description = models.CharField(max_length=1000, verbose_name='Описание', **NULLABLE)
@@ -19,7 +20,7 @@ class Dog(models.Model):
     name = models.CharField(max_length=250, verbose_name='Кличка')
     breed = models.ForeignKey(Breed, on_delete=models.CASCADE, verbose_name='Порода')
     photo = models.ImageField(upload_to='dogs/', **NULLABLE, verbose_name='Фото')
-    birth_date = models.DateField(**NULLABLE,verbose_name='Дата рождения')
+    birth_date = models.DateField(**NULLABLE, verbose_name='Дата рождения')
     is_active = models.BooleanField(default=True, verbose_name='Активность')
 
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE, verbose_name='Хозяин')
@@ -31,7 +32,6 @@ class Dog(models.Model):
     def views_count(self):
         self.views += 1
         self.save()
-
 
     class Meta:
         verbose_name = 'dog'

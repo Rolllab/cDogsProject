@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 
 NULLABLE = {'blank': True, 'null': True}
 
+
 class UserRoles(models.TextChoices):
     ADMIN = 'admin', _('admin')
     MODERATOR = 'moderator', _('moderator')

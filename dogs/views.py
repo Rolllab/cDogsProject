@@ -2,7 +2,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.http import Http404, HttpResponseForbidden
 from django.forms import inlineformset_factory
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q
@@ -55,7 +54,6 @@ class DogBreedListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         queryset = super().get_queryset().filter(breed_id=self.kwargs.get('pk'))
         return queryset
-
 
 
 class DogListView(ListView):
@@ -188,8 +186,8 @@ class DogUpdateView(LoginRequiredMixin, UpdateView):
         if formset.is_valid():
             formset.instance = self.object
             formset.save()
-        
         return super().form_valid(form) 
+
 
 class DogDeleteView(PermissionRequiredMixin, DeleteView):
     model = Dog

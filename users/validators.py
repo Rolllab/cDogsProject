@@ -3,6 +3,7 @@ import re
 from django.conf import settings
 from django.core.exceptions import ValidationError
 
+
 def validate_password(field):
     pattern = re.compile(r'^[A-Za-z0-9]+$')
     language = settings.LANGUAGE_CODE

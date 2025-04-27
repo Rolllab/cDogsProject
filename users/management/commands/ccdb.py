@@ -2,7 +2,7 @@
 import psycopg2
 from django.core.management import BaseCommand
 
-from config.settings import USER, PASSWORD, HOST, PAD, PORT
+from config.settings import USER, PASSWORD, HOST, PORT
 
 
 class Command(BaseCommand):
@@ -11,9 +11,8 @@ class Command(BaseCommand):
     help = 'Создает новую базу данных в PostgreSQL.'
 
     def add_arguments(self, parser):
-        parser.add_argument('db_name', type=str, help='Имя новой базы данных')  # help — это описание аргумента,
-                                                                                            # которое отображается при использовании
-                                                                                            # python manage.py ccdb --help
+        # help — это описание аргумента, которое отображается при использовании python manage.py ccdb --help
+        parser.add_argument('db_name', type=str, help='Имя новой базы данных')
 
     def handle(self, *args, **kwargs):
         db_name = kwargs['db_name']  # Получаем имя базы данных из аргументов

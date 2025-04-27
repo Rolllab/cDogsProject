@@ -1,20 +1,16 @@
 import random
 import string
 
-from django.shortcuts import render, reverse, redirect
-from django.http import HttpResponseRedirect, HttpResponse
-from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.shortcuts import reverse, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, PasswordChangeView, LogoutView
 from django.views.generic import CreateView, UpdateView, ListView, DetailView
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.contrib import messages
 
 from users.models import User
 from users.forms import UserRegisterForm, UserLoginForm, UserUpdateForm, UserPasswordChangeForm, UserForm
 from users.services import send_register_email, send_new_password
-
 
 
 class UserRegisterView(CreateView):
@@ -25,6 +21,7 @@ class UserRegisterView(CreateView):
     extra_context = {
         'title': 'Регистрация пользователя'
     }
+
     def form_valid(self, form):
         self.object = form.save()
         send_register_email(self.object.email)
@@ -46,6 +43,7 @@ class UserProfileView(UpdateView):
     extra_context = {
         'title': 'Ваш профиль'
     }
+
     def get_object(self, queryset=None):
         return self.request.user
 
@@ -55,11 +53,9 @@ class UserUpdateView(UpdateView):
     form_class = UserUpdateForm
     template_name = 'users/user_update.html'
     success_url = reverse_lazy('users:user_profile')
-    extra_context = {
-        'title': 'Изменить профиль'
-    }
+    extra_context = dict(title='Изменить профиль')
 
-    def get_object(self, queryset = None):
+    def get_object(self, queryset=None):
         return self.request.user
 
 
@@ -92,6 +88,7 @@ class UserListView(LoginRequiredMixin, ListView):
         queryset = queryset.filter(is_active=True)
         return queryset
 
+
 class UserDetailView(DetailView):
     model = User
     template_name = 'users/user_detail_view.html'
@@ -105,7 +102,7 @@ class UserDetailView(DetailView):
 
 @login_required
 def user_generate_new_password_view(request):
-    new_password = ''.join(random.sample((string.ascii_letters  + string.digits), 12))
+    new_password = ''.join(random.sample((string.ascii_letters + string.digits), 12))
     request.user.set_password(new_password)
     request.user.save()
     send_new_password(request.user.email, new_password)

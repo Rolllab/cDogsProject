@@ -2,7 +2,7 @@ from django.conf import settings
 from django.core.cache import cache
 from django.core.mail import send_mail
 
-from dogs.models import Breed, Dog
+from dogs.models import Breed
 
 
 # Кэшируем породы собак

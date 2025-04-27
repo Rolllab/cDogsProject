@@ -8,6 +8,7 @@ from users.models import User
 
 load_dotenv()
 
+
 class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         admin = User.objects.create(

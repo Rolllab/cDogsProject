@@ -4,11 +4,9 @@ from django.views.generic import ListView, CreateView, UpdateView, DetailView, D
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.exceptions import PermissionDenied
 
-from redis.commands.search.querystring import querystring
-
 from reviews.models import Review
 from reviews.forms import ReviewForm
-from users.models import User, UserRoles
+from users.models import UserRoles
 from reviews.utils import slug_generator
 
 
@@ -66,6 +64,7 @@ class ReviewDetailView(LoginRequiredMixin, DetailView):
     extra_context = {
         'title': 'Просмотр отзыва'
     }
+
 
 class ReviewUpdateView(LoginRequiredMixin, UpdateView):
     model = Review
