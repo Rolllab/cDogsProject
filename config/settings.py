@@ -29,7 +29,11 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'makemigrations.ru',
+    'www.makemigrations.ru',
+    '95.66.243.115'
+]
 
 
 # Application definition
